@@ -1,0 +1,19 @@
+# Ignore local config that holds API keys
+config.js
+.env
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Editor folders
+.vscode/
+
+# Mac / Windows artifacts
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
