@@ -107,6 +107,10 @@ color: white;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border: none;
+  border-radius: 10px;
 }
 
 .weather-description {
@@ -117,4 +121,9 @@ color: white;
 
 .wind-speed, .humid {
   margin: 5px 0 0 0;
+}
+
+.humidity.has-data, .windspeed.has-data {
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px #fff;
 }

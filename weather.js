@@ -8,6 +8,8 @@ const windImg = document.querySelector('.js-windspeed');
 const windSpeed = document.querySelector('.js-wind-speed');
 const humidityImg = document.querySelector('.js-humidity');
 const humid = document.querySelector('.js-humid');
+const humididtyContainer = document.querySelector('.humidity');
+const windspeedContainer = document.querySelector('.windspeed');
 
 const weatherApiBaseUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
@@ -44,15 +46,19 @@ async function checkWeather(city) {
       humidityImg.innerHTML = '';
       humid.innerHTML = '';
       searchBar.value = '';
+      humididtyContainer.classList.remove('has-data');
+      windspeedContainer.classList.remove('has-data');
     } else {
-      temp.innerHTML = `${data.main.temp}`;
+      temp.innerHTML = `${(data.main.temp.toFixed(1))}°C`;
       cityCountry.innerHTML = `${data.name}, ${data.sys.country}`;
       description.innerHTML = `${data.weather?.[0]?.description ?? 'No description'}`;
-      windImg.innerHTML = `<img src="assets/weather-wind-svgrepo-com.svg" alt="" class="wind-speed-img">`;
+      windImg.innerHTML = `<img src="assets/images/windy.svg" alt="" class="wind-speed-img">`;
       windSpeed.innerHTML = `${data.wind.speed} km/h`;
       humidityImg.innerHTML = `<img src="assets/humidity-svgrepo-com.svg" alt="" class="humidity-img">`;
       humid.innerHTML = `${data.main.humidity}%`;
       searchBar.value = '';
+      humididtyContainer.classList.add('has-data');
+      windspeedContainer.classList.add('has-data');
 
         const mainCondition = data.weather[0].main;
         const isDay = data.weather[0].icon.endsWith('d');
@@ -98,4 +104,3 @@ searchBar.addEventListener('keydown', (event) => {
     searchBar.blur();
   }
 });
-
