@@ -10,6 +10,8 @@ const humidityImg = document.querySelector('.js-humidity');
 const humid = document.querySelector('.js-humid');
 const humididtyContainer = document.querySelector('.humidity');
 const windspeedContainer = document.querySelector('.windspeed');
+const mainCard = document.querySelector('.main-card');
+const additionalDetails = document.querySelector('.additional-details');
 
 const weatherApiBaseUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
@@ -36,29 +38,48 @@ async function checkWeather(city) {
   const data = await response.json();
   console.log(data);
 
+  const removeAllData = () => {
+    mainCard.classList.remove('has-data');
+    weatherImg.classList.remove('has-data');
+    temp.classList.remove('has-data');
+    cityCountry.classList.remove('has-data');
+    description.classList.remove('has-data');
+    additionalDetails.classList.remove('has-data');
+    humididtyContainer.classList.remove('has-data');
+    windspeedContainer.classList.remove('has-data');
+  }
+
   if (data.cod === '404' || searchBar.value === '') {
-      weatherImg.innerHTML = 'city not found';
+      removeAllData();
+
+      weatherImg.innerHTML = '';
       temp.innerHTML = '';
-      cityCountry.innerHTML = '';
+      cityCountry.innerHTML = 'city not found';
       description.innerHTML = '';
       windImg.innerHTML = '';
       windSpeed.innerHTML = '';
       humidityImg.innerHTML = '';
       humid.innerHTML = '';
       searchBar.value = '';
-      humididtyContainer.classList.remove('has-data');
-      windspeedContainer.classList.remove('has-data');
     } else {
+      mainCard.classList.add('has-data');
+      weatherImg.classList.add('has-data');
+      temp.classList.add('has-data');
+      cityCountry.classList.add('has-data');
+      description.classList.add('has-data');
+      additionalDetails.classList.add('has-data');
+      humididtyContainer.classList.add('has-data');
+      windspeedContainer.classList.add('has-data');
+
       temp.innerHTML = `${(data.main.temp.toFixed(1))}°C`;
       cityCountry.innerHTML = `${data.name}, ${data.sys.country}`;
       description.innerHTML = `${data.weather?.[0]?.description ?? 'No description'}`;
-      windImg.innerHTML = `<img src="assets/images/windy.svg" alt="" class="wind-speed-img">`;
+      windImg.innerHTML = `<img src="assets/weather-wind-svgrepo-com.svg" alt="" class="wind-speed-img">`;
       windSpeed.innerHTML = `${data.wind.speed} km/h`;
       humidityImg.innerHTML = `<img src="assets/humidity-svgrepo-com.svg" alt="" class="humidity-img">`;
       humid.innerHTML = `${data.main.humidity}%`;
       searchBar.value = '';
-      humididtyContainer.classList.add('has-data');
-      windspeedContainer.classList.add('has-data');
+
 
         const mainCondition = data.weather[0].main;
         const isDay = data.weather[0].icon.endsWith('d');
